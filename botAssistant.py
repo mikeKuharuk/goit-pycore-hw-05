@@ -8,41 +8,48 @@ FIND_CONTACT = ["phone"]
 ALL_CONTACTS = ["all"]
 #
 
+def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except (ValueError, KeyError, IndexError):
+            return "Wrong input. Please provide correct arguments"
+    return inner
+
+@input_error
 def parse_input(raw_input: str) -> tuple[str, list[str]]:
-    try:
-        cmd, *args = raw_input.split()
-        cmd = cmd.strip().lower()
-    except ValueError:
-        return "invalid input", []
+    cmd, *args = raw_input.split()
+    cmd = cmd.strip().lower()
 
     return cmd, *args
 
+@input_error
 def add_contact(args, contacts: dict[str, str]) -> str:
     name, phone = args
     contacts[name] = phone
     return "Contact added: {}".format(name)
 
+@input_error
 def remove_contact(args, contacts: dict[str, str]) -> str:
     name, phone = args
     contacts.pop(name, None)
     return "Contact removed: {}".format(name)
 
+@input_error
 def change_contact(args, contacts: dict[str, str]) -> str:
     name, phone = args
-
-    if contacts.get(name, None) is None:
-        return "Contact not found"
-
     contacts[name] = phone
     return "Contact changed: {}".format(name)
 
-def find_contact(name: str, contacts: dict[str, str]) -> str:
+@input_error
+def find_contact(args, contacts: dict[str, str]) -> str:
+    name = args[0]
     search_result = contacts.get(name, None)
     if search_result is None:
         return "Contact not found: {}".format(name)
     return f"Contact found: {name} {search_result}"
 
-
+@input_error
 def find_all_contacts(contacts: dict[str, str]) -> str:
     if len(contacts) == 0:
         return "Contacts book is empty"
@@ -86,7 +93,7 @@ def main():
             print(change_contact(args, contacts))
 
         elif command in FIND_CONTACT:
-            print(find_contact(args[0], contacts))
+            print(find_contact(args, contacts))
 
         elif command in ALL_CONTACTS:
             print(find_all_contacts(contacts))
