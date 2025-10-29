@@ -101,10 +101,5 @@ def main():
     else:
         print("No args provided! Please provide a directory path as argument")
 
-        directory_in_sys_argument = "logs.log"
-        logs = load_logs(directory_in_sys_argument)
-        log_counts = count_logs_by_level(logs)
-        display_log_counts(log_counts)
-
 if __name__ == "__main__":
     main()
