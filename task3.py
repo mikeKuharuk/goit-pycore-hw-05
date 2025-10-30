@@ -25,6 +25,7 @@ def parse_log_line(line: str) -> dict | None:
     }
     return parsed_line
 
+
 def load_logs(file_path: str) -> list:
     file_content = ""
     try:
@@ -39,6 +40,7 @@ def load_logs(file_path: str) -> list:
 
     return formated_logs
 
+
 def filter_logs_by_level(logs: list, level: str) -> list:
     filtered_logs = []
     for log in logs:
@@ -46,15 +48,17 @@ def filter_logs_by_level(logs: list, level: str) -> list:
             filtered_logs.append(log)
     return filtered_logs
 
+
 def count_logs_by_level(logs: list) -> dict:
     logs_count = defaultdict(int)
     for log in logs:
         logs_count[log["tag"]] += 1
     return logs_count
 
-def display_log_counts(counts: dict):
 
-    # Formating metadata to support any tags with same format output with nice table
+def display_log_counts(counts: dict):
+    # Formating metadata to support any tags with
+    # same format output with nice table
     first_column_name = "Log counts"
     second_column_name = "Amount"
     divider = "|"
@@ -65,17 +69,24 @@ def display_log_counts(counts: dict):
     # Visually separating logs program output
     print("\n")
 
-    title_string = f"{outer_spacing * " " + max_header_size * " " + first_column_name +
-             inner_spacing * " " + divider + inner_spacing * " " + second_column_name}"
+    title_string = f"{outer_spacing * " " + max_header_size * " " +
+                      first_column_name + inner_spacing * " " +
+                      divider + inner_spacing * " " +
+                      second_column_name}"
     print(title_string)
 
-    subtitle_string = f"{(outer_spacing + max_header_size + len(first_column_name) + inner_spacing)*"-"+
-                         divider + (inner_spacing+len(second_column_name)+outer_spacing)*"-"}"
+    subtitle_string = f"{(outer_spacing + max_header_size +
+                          len(first_column_name) + inner_spacing) * "-" +
+                         divider + (inner_spacing + len(second_column_name)
+                                    + outer_spacing) * "-"}"
     print(subtitle_string)
 
     for tag, count in counts.items():
-        spase_size = ((max_header_size - len(tag)) + inner_spacing + len(first_column_name) + outer_spacing)
+        spase_size = ((max_header_size - len(tag)) +
+                      inner_spacing + len(first_column_name) +
+                      outer_spacing)
         print(f"{tag + spase_size * " " + divider + " " + str(count)}")
+
 
 def display_logs(logs: list):
     if len(logs) == 0:
@@ -84,10 +95,11 @@ def display_logs(logs: list):
     for log in logs:
         print(f"{log['date']}- {log['line']}")
 
-def main():
 
+def main():
     if len(sys.argv) > 1:
-        # Expected that first argument is path to target folder, all other args ignored
+        # Expected that first argument is
+        # path to target folder, all other args ignored
         directory_in_sys_argument = sys.argv[1]
         logs = load_logs(directory_in_sys_argument)
         log_counts = count_logs_by_level(logs)
@@ -100,6 +112,7 @@ def main():
 
     else:
         print("No args provided! Please provide a directory path as argument")
+
 
 if __name__ == "__main__":
     main()

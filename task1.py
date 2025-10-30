@@ -1,9 +1,9 @@
 def caching_fibonacci():
-    #Initalising cache
+    # Initialising cache
     cache = {}
 
-    #Inner recursive function to iterate on fibonacci numbers
-    def fibonacci(n:int) -> int:
+    # Inner recursive function to iterate on fibonacci numbers
+    def fibonacci(n: int) -> int:
 
         if not isinstance(n, int):
             print(f"Passed value must be an integer! Instead got '{n}'")
@@ -20,6 +20,7 @@ def caching_fibonacci():
 
     return fibonacci
 
+
 def main():
     # Getting fibonacci function
     fib = caching_fibonacci()
@@ -35,8 +36,8 @@ def main():
     print(fib("One"))
     print(fib(""))
     print(fib(0.5))
-    print(fib([1,2,3]))
-    print(fib({1:1,2:2}))
+    print(fib([1, 2, 3]))
+    print(fib({1: 1, 2: 2}))
 
 
 if __name__ == '__main__':
